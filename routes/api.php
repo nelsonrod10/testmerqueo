@@ -13,6 +13,21 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});*/
+
+Route::prefix('orders')->group(function(){
+    Route::get('availables-products-inventory','Orders\ProductsAvailablesController@inventory');
+    Route::get('availables-products-providers','Orders\ProductsAvailablesController@providers');
+    Route::get('/{id}/products-inventory-providers', 'Orders\ProductsOrdersController@delivery');
+});
+
+Route::prefix('products')->group(function(){
+   Route::get('best-sellers','Products\ProductsController@bestSellers'); 
+   Route::get('less-sold','Products\ProductsController@lessSold'); 
+});
+
+Route::prefix('inventory')->group(function(){
+   Route::get('next-day','Inventory\InventoryController@nextDay'); 
 });
