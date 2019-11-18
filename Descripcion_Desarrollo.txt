@@ -1,0 +1,79 @@
+DESCRIPCION DEL DESARROLLO PRUEBA BACKEND / API MERQUEO
+
+Fecha: 18 Noviembre de 2019
+Desarrollado por: Nelson Dario Rodriguez
+Email: nelsonrod10@gmail.com
+
+Leguaje: PHP
+Framework: Laravel 6.2
+
+MODELOS
+
+		Inventory.php 
+			=> Modelo en el que se relacionan todo el inventario de los productos disponibles
+			=> Ubicación: app/Inventory.php
+		Order.php 
+			=> Modelo en el que se relacionan los datos generales de las ordenes para entregar el 1 de marzo
+			=> Ubicación: app/Order.php
+
+		OrdersProduct.php 
+			=> Modelo en el que se relacionan todos los productos que conforman una orden
+			=> Ubicación: app/OrdersProduct.php
+
+		Product.php 
+			=> Modelo en el que se relacionan todos los productos
+			=> Ubicación: app/Product.php
+
+		Provider.php 
+			=> Modelo en el que se relacionan los datos generales de los proveedores
+			=> Ubicación: app/Provider.php
+
+		ProvidersProduct.php 
+			=> Modelo en el que se relacionan todos los productos de cada proveedor
+			=> Ubicación: app/Inventory.php
+
+CONTROLADORES
+
+		InventoryController.php
+			=> Controlador que entrega el listado de los productos disponibles en el inventario para el 2 de marzo 
+			=> Ubicación: app/Http/Controllers/Inventory/InventoryController.php
+
+		ProductsAvailablesController.php
+			=> Controlador encargado de obtener el listado de los productos disponibles en el inventario para las ordenes que se entregan el 1 de marzo
+			=> Controlador encargado de obtener el listado de los productos que se deben pedir a los proveedores para las ordenes que se entregan el 1 de marzo
+			=> Ubicación: app/Http/Controllers/Orders/ProductsAvailablesController.php
+
+		ProductsOrdersController.php
+			=> Controlador encargado de obtener de acuerdo al id de una orden el listado de los productos disponibles en el inventario y los que se deben pedir a proveedores
+			=> Ubicación: app/Http/Controllers/Orders/ProductsOrdersController.php
+
+		ProductsController.php
+			=> Controlador encargado de obtener de crear el ranking de los productos más y menos vendidos el 1 de marzo
+			=> Ubicación: app/Http/Controllers/Orders/ProductsController.php
+
+END POINTS
+	Este es el listado de los endpoints creados para dar respuesta a cada uno de los puntos de la prueba
+
+	Descripción => Consultar qué productos y qué cantidad puede ser alistada desde el inventario.
+		     Endpoint => /orders/availables-products-inventory 	
+
+	Descripción => Consultar los productos que deben ser alistados por proveedores, y a qué proveedor le corresponde cada pedido
+		     Endpoint => /orders/availables-products-providers
+
+	Descripción => Dado el Id de un pedido, saber qué productos y qué cantidad pueden ser alistados según sistema de inventario y cuáles deben ser abastecidos por los proveedores
+		     Endpoint => /orders/{id}/products-inventory-providers
+
+	Descripción => Productos más vendidos el día 1 de marzo
+		     Endpoint => /products/best-sellers
+
+	Descripción => Productos menos vendidos el día 1 de marzo
+		     Endpoint => /products/less-sold
+
+	Descripción => Calcular el inventario del día 2 de marzo, teniendo en cuenta las pedidos despachados el 1 de marzo
+		     Endpoint => /inventory/next-day
+
+PENDIENTES
+	Código de autenticación para acceder a los endpoints
+	Clases Resources
+	TDD
+ 	
