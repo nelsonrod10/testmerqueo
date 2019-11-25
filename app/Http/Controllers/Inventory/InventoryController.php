@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Inventory;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
 use App\OrdersProduct;
 
-class InventoryController extends Controller
+class InventoryController extends ApiController
 {
     public function nextDay(){
         $response = [];
         $products = OrdersProduct::all()->groupBy("product_id");
-        
+
         foreach($products as $key => $product):
             $inventarioInicialProducto = $despachos = $available = 0;
             $totalOrdenesProducto = $product->sum('quantity');
@@ -27,7 +26,7 @@ class InventoryController extends Controller
                 'total-available' => $available
             ]);
         endforeach;
-        
-        return response()->json(['products'=>$response]);
+        return $this->sendReponse($response, 200);
+
     }
 }
