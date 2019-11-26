@@ -40,7 +40,7 @@ class ProductsOrdersController extends ApiController
 
     private function productInventory($product){
         $inventoryQuantity = 'No existe en inventario';
-        if($product->product->inventory){
+        if($product->hasInventory()){
             (int)$inventoryQuantity = ($product->product->inventory->quantity > $product->quantity)?
             $product->quantity : $product->product->inventory->quantity;
         }
@@ -50,7 +50,7 @@ class ProductsOrdersController extends ApiController
 
     private function providersQuantity($product){
         $providersQuantity = 'No existe proveedor';
-        if($product->product->providers->count() > 0){
+        if($product->hasProviders()){
             (int)$providersQuantity = $product->quantity - $this->productInventory($product);
         }
 

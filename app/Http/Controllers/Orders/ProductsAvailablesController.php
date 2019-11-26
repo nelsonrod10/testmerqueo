@@ -12,13 +12,10 @@ class ProductsAvailablesController extends ApiController
         $products = OrdersProduct::with('product')->get()->groupBy('product_id');
         foreach ($products as $key => $product) {
             array_push($availableProducts, [
-                'product'=>
-                [
-                    'id'   => $key,
-                    'name' => $product[0]->product->name,
-                    'orders-total'  => $product->sum('quantity'),
-                    'inventory-available'  => $this->inventoryAvailable($product[0], $product)
-                ]
+                  'id'   => $key,
+                  'name' => $product[0]->product->name,
+                  'orders-total'  => $product->sum('quantity'),
+                  'inventory-available'  => $this->inventoryAvailable($product[0], $product)
             ]);
         }
         return $this->sendReponse($availableProducts, 200);
@@ -36,12 +33,10 @@ class ProductsAvailablesController extends ApiController
             if($totalProvider > 0){
 
                 array_push($response, [
-                    'product' => [
-                        'id'   => $key,
-                        'name' => $product[0]->product->name,
-                        'orders-total'  => $product->sum('quantity'),
-                        'providers' => $this->providersList($product[0], $totalProvider)
-                    ],
+                      'id'   => $key,
+                      'name' => $product[0]->product->name,
+                      'orders-total'  => $product->sum('quantity'),
+                      'providers' => $this->providersList($product[0], $totalProvider)
                 ]);
             }
         }
@@ -50,7 +45,7 @@ class ProductsAvailablesController extends ApiController
 
     private function inventoryAvailable($product, $groupProduct) {
         $inventoryAvailable = 0;
-        if($product->product->inventory){
+        if($product->hasInventory()){
             $inventoryAvailable = ($product->product->inventory->quantity > $groupProduct->sum('quantity'))?
             $groupProduct->sum('quantity') : $product->product->inventory->quantity;
         }
@@ -60,7 +55,7 @@ class ProductsAvailablesController extends ApiController
 
     private function providersList($product,$totalProvider){
         $providers = [];
-        if($product->product->providers->count() > 0 ){
+        if($product->hasProviders()){
             foreach($product->product->providers as $productProvider){
                 array_push($providers,[
                     'id' => $productProvider->provider->id,

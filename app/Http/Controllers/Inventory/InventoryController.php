@@ -15,8 +15,8 @@ class InventoryController extends ApiController
             $inventarioInicialProducto = $despachos = $available = 0;
             $totalOrdenesProducto = $product->sum('quantity');
 
-            if($product[0]->product->inventory){
-                $inventarioInicialProducto = $product[0]->product->inventory->quantity;
+            if($product[0]->hasInventory()){
+                $inventarioInicialProducto = $product[0]->hasInventory()->quantity;
                 $despachos = ($inventarioInicialProducto > $totalOrdenesProducto)? $totalOrdenesProducto : ($inventarioInicialProducto);
             }
             $available = $inventarioInicialProducto - $despachos;

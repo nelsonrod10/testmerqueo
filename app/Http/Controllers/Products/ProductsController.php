@@ -26,11 +26,9 @@ class ProductsController extends ApiController
         $products = [];
         foreach($vendidos as $productVendido){
             array_push($products, [
-             'product'=>[
                  'id'       =>  $productVendido->product->id,
                  'name'     =>  $productVendido->product->name,
                  'quantity' =>  $productVendido->quantity
-             ]
             ]);
         }
 

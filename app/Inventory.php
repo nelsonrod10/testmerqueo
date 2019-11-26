@@ -14,8 +14,12 @@ class Inventory extends Model
     protected $fillable = [
         'product_id','quantity','date'
     ];
-    
+
     public function products(){
         return $this->hasMany(\App\Product::class);
+    }
+
+    public function hasInventory(){
+        return $this->quantity > 0;
     }
 }
